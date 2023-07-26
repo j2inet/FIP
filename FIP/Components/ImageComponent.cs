@@ -14,9 +14,8 @@ namespace FIP.Components
     {
         
 
-        public ImageComponent(Device parent, ImageCapabilities capabilities)
+        public ImageComponent(Device parent, ImageCapabilities capabilities): base(parent)
         {
-            this.parent = parent;
             this.Capabilities= capabilities;
         }
         
@@ -30,10 +29,17 @@ namespace FIP.Components
         {
             try
             {
-                var scaledImage = new TransformedBitmap(image, new System.Windows.Media.ScaleTransform(Capabilities.Width / image.Width, Capabilities.Height / image.Height));
+                var scaledImage = new TransformedBitmap(image, new System.Windows.Media.ScaleTransform(Capabilities.Width / image.Width, -Capabilities.Height / image.Height));
                 var sampleImage = new byte[4 * Capabilities.Width * Capabilities.Height];
+                var adjustedImage = new byte[3*Capabilities.Width * Capabilities.Height];
                 scaledImage.CopyPixels(sampleImage, 4 * Capabilities.Width, 0);
-                DirectOutput.DirectOutput_SetImage(parent.DeviceID, page, 0, 3*Capabilities.Width* Capabilities.Height, sampleImage);
+                for(var i=0;i<Capabilities.Width * Capabilities.Height;i++)
+                {
+                    adjustedImage[i * 3] = sampleImage[i * 4];
+                    adjustedImage[i * 3 + 1] = sampleImage[i * 4 + 1];
+                    adjustedImage[i * 3 + 2] = sampleImage[i * 4 + 2];
+                }
+                DirectOutput.DirectOutput_SetImage(parent.DeviceID, page, 0, 3*Capabilities.Width* Capabilities.Height, adjustedImage);
             }catch(Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);

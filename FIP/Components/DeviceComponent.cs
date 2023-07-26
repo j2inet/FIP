@@ -1,35 +1,25 @@
-﻿using FIP.Win32;
+﻿using FIP.ViewModels;
+using FIP.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static FIP.Win32.DirectOutput;
 
 namespace FIP.Components
 {
-    public class DeviceComponent
+    public abstract class DeviceComponent
     {
-        internal int PageCount { get; set;  } = 0;
         internal Device parent { get; set; }
 
-        public int AddPage( int page, DirectOutputFlags flags)
+
+        public DeviceComponent(Device parent)
         {
-            var result = DirectOutput.DirectOutput_AddPage(parent.DeviceID, page, (int)flags);
-            if(result == (int)DirectOutputResult.S_OK)
-            {
-                this.PageCount++;
-            }
-            return result;
+            this.parent = parent;
         }
 
-        public int RemovePage(int page)
-        {
-            var result = DirectOutput.DirectOutput_RemovePage(parent.DeviceID, page);
-            if(result == (int)DirectOutputResult.S_OK)
-            {
-                this.PageCount--;
-            }
-            return result;
-        }
+
     }
 }

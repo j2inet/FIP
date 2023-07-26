@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\SoftButtonComponent.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -91,7 +92,7 @@
     <Compile Include="Capabilities\LedCapabilities.cs" />
     <Compile Include="Capabilities\LoadCapabilities.cs" />
     <Compile Include="Capabilities\ShiftButtonCapabilities.cs" />
-    <Compile Include="Capabilities\SoftButton.cs" />
+    <Compile Include="Capabilities\SoftButtonCapabilities.cs" />
     <Compile Include="Capabilities\StringCapabilities.cs" />
     <Compile Include="Components\Device.cs" />
     <Compile Include="Components\DeviceComponent.cs" />

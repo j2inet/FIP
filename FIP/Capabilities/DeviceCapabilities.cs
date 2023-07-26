@@ -43,11 +43,11 @@ namespace FIP.Capabilities
                         continue;
                     }
 
-                    var softButtonMatch = SoftButton.CapRegex.Match(capPart);
+                    var softButtonMatch = SoftButtonCapabilities.CapRegex.Match(capPart);
                     if(softButtonMatch.Success)
                     {
-                        var softButton = new SoftButton();
-                        softButton.ID = Convert.ToInt32(softButtonMatch.Groups[1].Value, 16);
+                        var softButton = new SoftButtonCapabilities();
+                        softButton.ButtonID = Convert.ToInt32(softButtonMatch.Groups[1].Value, 16);
                         softButton.Mask = Convert.ToInt32(softButtonMatch.Groups[2].Value, 16);
                         capabilities.Add(softButton);
                         continue;

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FIP.Capabilities
 {
-    class SoftButton: Capabilities
+    public class SoftButtonCapabilities: Capabilities
     {
         public static Regex CapRegex = new Regex(@"\[softbutton=(\w+) mask=(\w+)\]", RegexOptions.IgnoreCase);
 
-        public int ID { get; set;  }
+        public int ButtonID { get; set;  }
         public int Mask { get; set; }
     }
 }

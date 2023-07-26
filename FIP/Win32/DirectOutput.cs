@@ -25,10 +25,11 @@ namespace FIP.Win32
 
     public static class DirectOutput
     {
-
-
         public delegate void DirectOutput_EnumerateCallback(IntPtr hDevice, IntPtr pvParam);
         public delegate void DirectOutput_Device_Callback(IntPtr hDevice, bool Added, IntPtr pvParam);
+        public delegate void DirectOutput_Page_Callback(IntPtr hDevice, uint dwPage, bool Added, IntPtr pvParam);
+        public delegate void DirectOutput_SoftButton_Callback(IntPtr hDevice, uint dwButtons, IntPtr pvParam);
+
 
         [DllImport("DirectOutput.dll", CharSet = CharSet.Unicode)]
         public static extern int DirectOutput_AddPage(IntPtr hDevice, int dwPage, int dwFlags);
@@ -49,7 +50,14 @@ namespace FIP.Win32
         public static extern int DirectOutput_GetDeviceType(IntPtr hDevice, out Guid pGuid);
 
         [DllImport("DirectOutput.dll", CharSet = CharSet.Unicode)]
+        public static extern int DirectOutput_RegisterPageCallback(IntPtr hDevice, DirectOutput_Page_Callback pfnCallback, IntPtr pvParam);
+
+        [DllImport("DirectOutput.dll", CharSet = CharSet.Unicode)]
         public static extern int DirectOutput_RegisterDeviceCallback(DirectOutput_Device_Callback pfnCallback, IntPtr pvParam);
+
+        [DllImport("DirectOutput.dll", CharSet = CharSet.Unicode)]
+        public static extern int DirectOutput_RegisterSoftButtonCallback(IntPtr hDevice, DirectOutput_SoftButton_Callback pfnCallback, IntPtr pvParam);
+
 
         [DllImport("DirectOutput.dll", CharSet = CharSet.Unicode)]
 

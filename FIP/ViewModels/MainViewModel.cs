@@ -33,6 +33,7 @@ namespace FIP.ViewModels
         //collected and we get an exception when the native code calls it.        
         DirectOutput_EnumerateCallback enumerateCallbackRef;
         DirectOutput_Device_Callback deviceCallbackRef;
+        
         public MainViewModel() 
         { 
             DirectOutputPath = GetDirectOutputPath();
@@ -55,6 +56,7 @@ namespace FIP.ViewModels
                 handle = GCHandle.Alloc(this);
                 DirectOutput.DirectOutput_Enumerate(enumerateCallbackRef = DirectOutput_EnumerateCallback, ((IntPtr)handle) );
                 DirectOutput.DirectOutput_RegisterDeviceCallback(deviceCallbackRef = DirectOutput_DeviceCallback, (IntPtr)handle);
+                
                 handle.Free();
 
 
@@ -127,10 +129,10 @@ namespace FIP.ViewModels
             if(deviceCaps!= null)
             {
                 var device = new Device(hDevice, deviceCaps);
+                device.AddPage(1, DirectOutputFlags.IsActive);
                 var imageComponent = device.GetDevices<ImageComponent>().FirstOrDefault();
                 if(imageComponent != null)
-                {
-                    imageComponent.AddPage(1, DirectOutputFlags.IsActive);
+                {                    
                     imageComponent.DisplayImage(displayImage, 1);
                     //imageComponent.DisplayImage(imagePath);
                 }
